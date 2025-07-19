@@ -377,8 +377,8 @@ class PostProcessor:
             plt.close()
             
             # Export as GraphML for interactive analysis (Gephi/Cytoscape)
-            nx.write_graphml(self.character_graph, output_dir / "character_network.graphml")
-            print("✓ Saved character network visualization and GraphML export")
+            # nx.write_graphml(self.character_graph, output_dir / "character_network.graphml")  # NumPy 2.0 compatibility issue
+            print("✓ Saved character network visualization")
         
         # Location flow diagram
         if len(self.location_graph.nodes) > 0:
