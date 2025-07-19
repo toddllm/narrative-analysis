@@ -13,6 +13,16 @@ A robust, production-ready pipeline for mapping large narratives with 100% cover
 - **🗺️ Derived Views**: Character atlas, location gazetteer, item inventory, and narrative flow
 - **🔗 Cross-Referenced Analysis**: Character interactions and location connections
 
+## 📸 Example Visualizations
+
+### Character Network Analysis
+![Character Network](examples/zombie-story-analysis/character_network.png)
+*Comprehensive character relationship mapping showing 24 interconnected characters from a science fiction narrative*
+
+### Location Flow Mapping
+![Location Flow](examples/zombie-story-analysis/location_flow.png)
+*Multi-dimensional location connections across 46 unique locations spanning different realities*
+
 ## Quick Start
 
 ```bash
@@ -53,7 +63,11 @@ narrative-analysis/
 │   ├── chunk_dispatcher.py # Batch management
 │   └── requirements.txt    # Python dependencies
 ├── examples/               # Sample stories and outputs
-│   └── sample_story.txt    # Example narrative
+│   ├── sample_story.txt    # Example narrative
+│   └── zombie-story-analysis/  # Complete analysis example
+│       ├── character_network.png
+│       ├── location_flow.png
+│       └── mapping.md
 ├── docs/                  # Documentation
 └── .github/workflows/     # CI/CD automation
 ```
@@ -118,6 +132,14 @@ Typical results for a novel-length work:
 - **Locations**: Comprehensive geographical analysis
 - **Processing**: ~1 hour for 200+ pages
 - **Integrity**: 100% UID coverage with zero-loss verification
+
+## Example Analysis
+
+Check out our [**Zombie Story Analysis Example**](examples/zombie-story-analysis/README.md) which demonstrates:
+- Complex multi-dimensional narratives with 21 chapters
+- 24 unique characters with intricate relationships
+- 46 locations across multiple realities
+- 100% coverage with zero gaps detected
 
 ## Contributing
 
