@@ -1,0 +1,66 @@
+name: Story Mapping Pipeline
+
+on:
+  push:
+    paths:
+      - 'examples/sample_story.txt'
+      - '*.py'
+  pull_request:
+    paths:
+      - 'examples/sample_story.txt'
+      - '*.py'
+
+jobs:
+  generate-mapping:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+        pip install ollama
+    
+    - name: Setup Ollama
+      run: |
+        curl -fsSL https://ollama.com/install.sh | sh
+        ollama serve &
+        sleep 10
+        ollama pull qwen2.5:72b
+    
+    - name: Run Story Mapping Pipeline
+      run: |
+        cd src && python orchestrator.py
+        python post_processor.py
+    
+    - name: Check for UID consistency
+      run: |
+        python -c "
+        import json
+        with open('mapping.json') as f:
+            data = json.load(f)
+        
+        expected_count = len(data)
+        actual_count = len([unit for unit in data if unit.get('UID')])
+        
+        if actual_count != expected_count:
+            print(f'❌ UID Mismatch: Expected {expected_count}, got {actual_count}')
+            exit(1)
+        
+        print(f'✅ UID Consistency Check Passed: {actual_count} units')
+        "
+    
+    - name: Commit generated files
+      if: github.event_name == 'push'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add mapping.* derived_views/ assets/
+        git diff --staged --quiet || git commit -m "🤖 Auto-update story mapping [skip ci]"
+        git push 

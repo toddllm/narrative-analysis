@@ -1,0 +1,5 @@
+networkx>=2.6.0
+matplotlib>=3.4.0
+# Add any additional requirements for LLM integration as needed
+# openai>=1.0.0  # For OpenAI API integration
+# anthropic>=0.3.0  # For Claude API integration
